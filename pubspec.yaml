@@ -16,6 +16,8 @@ dependencies:
   riverpod_annotation: ^2.3.5
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.2.0+3
+  vector_graphics: ^1.1.11+1
+  vector_graphics_compiler: ^1.1.11+1
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +30,29 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    # Regular assets
+    - path: assets/default_image.png
+    - path: assets/default_avatar.png
+    # SVGs to be transformed
+    - path: assets/icon_comment.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/icon_heart_blue.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/icon_heart_red.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/icon_info.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/icon_link.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/icon_verified.svg
+      transformers:
+        - package: vector_graphics_compiler
+    - path: assets/icon_x.svg
+      transformers:
+        - package: vector_graphics_compiler
