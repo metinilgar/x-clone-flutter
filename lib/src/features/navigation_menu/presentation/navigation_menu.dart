@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/controller/navigation_controller.dart';
+import 'package:x_clone_flutter/src/features/navigation_menu/presentation/drawer/drawer_contents.dart';
 import 'package:x_clone_flutter/src/features/notifications/notifications_screen.dart';
 import 'package:x_clone_flutter/src/features/search/search_screen.dart';
 import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_list_screen.dart';
@@ -22,7 +23,7 @@ class _NavigationMenuState extends ConsumerState<NavigationMenu> {
 
     return Scaffold(
       appBar: Hidable(
-        preferredWidgetSize: const Size.fromHeight(80),
+        preferredWidgetSize: const Size.fromHeight(100),
         controller: scrollController,
         child: AppBar(
             surfaceTintColor: Colors.transparent,
@@ -30,6 +31,7 @@ class _NavigationMenuState extends ConsumerState<NavigationMenu> {
             centerTitle: true,
             title: const SizedBox(width: 25, height: 25, child: Placeholder())),
       ),
+      drawer: const DrawerContents(),
       bottomNavigationBar: Hidable(
         controller: scrollController,
         child: Container(
