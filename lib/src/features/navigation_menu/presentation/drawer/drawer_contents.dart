@@ -10,13 +10,18 @@ class DrawerContents extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 26),
         children: [
+          // Drawer Header
           const DrawerProfileHeader(),
+
+          // Drawer Profile
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.person_outline),
             title: const Text('Profile'),
             onTap: () => Navigator.pop(context),
           ),
+
+          // Drawer Settings
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.settings_outlined),

@@ -10,11 +10,14 @@ class DrawerProfileHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Avatar
           const CircleAvatar(
             radius: 20,
             backgroundImage: AssetImage('assets/default_avatar.png'),
           ),
           const SizedBox(height: 10),
+
+          // Name
           Text(
             'Metin Ilgar Mutlu',
             style: Theme.of(context)
@@ -22,6 +25,8 @@ class DrawerProfileHeader extends StatelessWidget {
                 .titleLarge!
                 .copyWith(fontWeight: FontWeight.bold),
           ),
+
+          // Username
           Text(
             '@metinilgarmutlu',
             style: Theme.of(context)
