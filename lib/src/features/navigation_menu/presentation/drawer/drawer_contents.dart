@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/drawer/drawer_profile_header.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/profile_screen.dart';
 
 class DrawerContents extends StatelessWidget {
   const DrawerContents({super.key});
@@ -18,7 +19,11 @@ class DrawerContents extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.person_outline),
             title: const Text('Profile'),
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ProfileScreen(),
+              ),
+            ),
           ),
 
           // Drawer Settings
