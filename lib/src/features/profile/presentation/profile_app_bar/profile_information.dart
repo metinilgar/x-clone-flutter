@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
 
 class ProfileInformation extends StatelessWidget {
   const ProfileInformation({super.key});
@@ -12,32 +13,31 @@ class ProfileInformation extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Metin Ilgar Mutlu',
+              appUser.name,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
             const SizedBox(height: 4.0),
             Text(
-              '@metinilgarmutlu',
+              '@${appUser.userName}',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: Colors.grey,
                   ),
             ),
             const SizedBox(height: 8.0),
-            const Text(
-                "Flutter Developer. I'm a software engineer who loves to write code and build apps."),
+            Text(appUser.bio),
             const SizedBox(height: 8.0),
-            const Row(
+            Row(
               children: [
                 Text(
-                  '46 Takip edilen',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  '${appUser.following} Following',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
                 Text(
-                  '11 Takipçi',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  '${appUser.followers} Followers',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),

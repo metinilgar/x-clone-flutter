@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
 
 class DrawerProfileHeader extends StatelessWidget {
   const DrawerProfileHeader({super.key});
@@ -19,7 +20,7 @@ class DrawerProfileHeader extends StatelessWidget {
 
           // Name
           Text(
-            'Metin Ilgar Mutlu',
+            appUser.name,
             style: Theme.of(context)
                 .textTheme
                 .titleLarge!
@@ -28,7 +29,7 @@ class DrawerProfileHeader extends StatelessWidget {
 
           // Username
           Text(
-            '@metinilgarmutlu',
+            '@${appUser.userName}',
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!

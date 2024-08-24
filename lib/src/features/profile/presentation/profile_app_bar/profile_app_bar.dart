@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
 
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({super.key});
@@ -24,7 +25,7 @@ class ProfileAppBar extends StatelessWidget {
         bool isAppBarExpanded = constraints.maxHeight > kToolbarHeight;
 
         return FlexibleSpaceBar(
-          title: isAppBarExpanded ? null : const Text('Metin Ilgar Mutlu'),
+          title: isAppBarExpanded ? null : Text(appUser.name),
           background: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -32,7 +33,7 @@ class ProfileAppBar extends StatelessWidget {
                 width: double.infinity,
                 height: 140,
                 child: Image.asset(
-                  "assets/default_image.png",
+                  appUser.bannerUrl,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -57,7 +58,7 @@ class ProfileAppBar extends StatelessWidget {
                       ),
                       child: ClipOval(
                         child: Image.asset(
-                          "assets/default_avatar.png",
+                          appUser.photoUrl,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -65,7 +66,7 @@ class ProfileAppBar extends StatelessWidget {
                     const Spacer(),
                     OutlinedButton(
                       onPressed: () {},
-                      child: const Text('Profili düzenle'),
+                      child: const Text('Edit Profile'),
                     ),
                   ],
                 ),

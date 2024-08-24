@@ -32,7 +32,7 @@ class TweetHeader extends StatelessWidget {
         // Username
         Flexible(
           child: Text(
-            username,
+            '@$username',
             overflow: TextOverflow.ellipsis,
             softWrap: false,
             style: const TextStyle(color: Color(0xFF566370)),

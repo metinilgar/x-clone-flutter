@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/profile_app_bar/profile_app_bar.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/profile_app_bar/profile_information.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -33,19 +35,15 @@ class ProfileScreen extends StatelessWidget {
           body: TabBarView(
             children: tabs.map((String name) {
               return ListView.builder(
+                padding: const EdgeInsets.only(top: 16.0),
                 key: PageStorageKey<String>(name),
-                itemCount: 20,
+                itemCount: appUser.tweets.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: 200,
-                    color: index.isEven ? Colors.grey[500] : Colors.grey[600],
-                    padding: const EdgeInsets.all(16),
-                    child: Center(
-                      child: Text(
-                        'Post $index',
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
-                    ),
+                  return Column(
+                    children: [
+                      TweetCard(data: appUser.tweets[index]),
+                      const Divider(),
+                    ],
                   );
                 },
               );
