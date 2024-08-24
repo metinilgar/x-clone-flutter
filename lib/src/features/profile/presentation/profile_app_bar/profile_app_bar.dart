@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile_screen.dart';
 
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({super.key});
@@ -65,7 +66,11 @@ class ProfileAppBar extends StatelessWidget {
                     ),
                     const Spacer(),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfileScreen(),
+                        ),
+                      ),
                       child: const Text('Edit Profile'),
                     ),
                   ],
