@@ -12,6 +12,7 @@ class ProfileInformation extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Name
             Text(
               appUser.name,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -19,6 +20,8 @@ class ProfileInformation extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 4.0),
+
+            // Username
             Text(
               '@${appUser.userName}',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -26,8 +29,12 @@ class ProfileInformation extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 8.0),
+
+            // Bio
             Text(appUser.bio),
             const SizedBox(height: 8.0),
+
+            // Followers and Following
             Row(
               children: [
                 Text(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/banner_image.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/clickable_overlay.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/entry.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -26,18 +29,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
+  // Show Image Options
   Future<void> _showImageOptions() async {
     switch (await showDialog<String>(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
             children: <Widget>[
+              // Camera Option
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, "camera");
                 },
                 child: const Text('Camera'),
               ),
+
+              // Gallery Option
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, "gallery");
@@ -62,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
-    ;
+
     return Scaffold(
       // appBar
       appBar: AppBar(
@@ -87,69 +97,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   const SizedBox(height: 190),
 
                   // Banner Image
-                  GestureDetector(
-                    onTap: () {
-                      _showImageOptions();
-                    },
-                    child: Stack(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          height: 140,
-                          child: Image.asset(
-                            appUser.bannerUrl,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: 140,
-                          color: Colors.black38,
-                          child: const Icon(
-                            Icons.camera_alt_outlined,
-                            size: 40,
-                          ),
-                        ),
-                      ],
-                    ),
+                  ClickableOverlay(
+                    onTap: _showImageOptions,
+                    child: const BannerImage(),
                   ),
 
                   // Profile Image
                   Positioned(
                     left: 8,
                     top: 100,
-                    child: GestureDetector(
-                      onTap: () {
-                        _showImageOptions();
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 4.0,
-                          ),
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          width: 4.0,
                         ),
-                        child: ClipOval(
-                          child: Stack(
-                            children: [
-                              Image.asset(
-                                appUser.photoUrl,
-                                fit: BoxFit.cover,
-                              ),
-                              Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                color: Colors.black38,
-                                child: const Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 40,
-                                ),
-                              ),
-                            ],
+                      ),
+                      child: ClipOval(
+                        child: ClickableOverlay(
+                          onTap: _showImageOptions,
+                          child: Image.asset(
+                            appUser.photoUrl,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -158,31 +131,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ],
               ),
 
-              // TextFields
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _nameTextFieldController,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'Name',
-                        hintText: 'Name cannot be empty',
-                      ),
-                    ),
-                    const SizedBox(height: 26),
-                    TextField(
-                      controller: _bioTextFieldController,
-                      maxLines: 3,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'Personal Information',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Name TextField
+              Entry(
+                  controller: _nameTextFieldController,
+                  title: "Name",
+                  maxLine: 1),
+              const SizedBox(height: 26),
+
+              // Bio TextField
+              Entry(
+                  controller: _bioTextFieldController,
+                  title: "Personal Information",
+                  maxLine: 3),
             ],
           ),
         ),

@@ -17,8 +17,11 @@ class ProfileScreen extends StatelessWidget {
           body: SafeArea(
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => <Widget>[
+            // ProfileAppBar
             const ProfileAppBar(),
             const ProfileInformation(),
+
+            // TabBar
             SliverPersistentHeader(
               pinned: true,
               delegate: _SliverAppBarDelegate(
@@ -32,6 +35,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ],
+
+          // TabBarView
           body: TabBarView(
             children: tabs.map((String name) {
               return ListView.builder(
