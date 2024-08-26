@@ -13,6 +13,8 @@ class ClickableOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.center,
+      fit: StackFit.passthrough,
       children: [
         child,
 

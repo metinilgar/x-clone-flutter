@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
-import 'package:x_clone_flutter/src/features/profile/presentation/banner_image.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/clickable_overlay.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/entry.dart';
 
@@ -14,6 +16,8 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _nameTextFieldController;
   late TextEditingController _bioTextFieldController;
+  File? _bannerImage;
+  File? _profileImage;
 
   @override
   void initState() {
@@ -29,8 +33,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
+  // Banner Image Picker
+  void _onPickBannerImage() {
+    _showImageOptions(
+      (image) {
+        setState(() {
+          _bannerImage = image;
+        });
+      },
+    );
+  }
+
+  // Profile Image Picker
+  void _onPickProfileImage() {
+    _showImageOptions(
+      (image) {
+        setState(() {
+          _profileImage = image;
+        });
+      },
+    );
+  }
+
   // Show Image Options
-  Future<void> _showImageOptions() async {
+  Future<void> _showImageOptions(void Function(File image) onPickImage) async {
     switch (await showDialog<String>(
         context: context,
         builder: (BuildContext context) {
@@ -58,15 +84,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           );
         })) {
       case "camera":
-        print("camera");
+        getImage(ImageSource.camera, onPickImage);
         break;
       case "gallery":
-        print("gallery");
+        getImage(ImageSource.gallery, onPickImage);
         break;
       case null:
         print("dialog dismissed");
         break;
     }
+  }
+
+  void getImage(
+      ImageSource source, void Function(File image) onPickImage) async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: source, imageQuality: 50);
+
+    if (pickedImage == null) return;
+
+    onPickImage(File(pickedImage.path));
   }
 
   @override
@@ -98,8 +134,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                   // Banner Image
                   ClickableOverlay(
-                    onTap: _showImageOptions,
-                    child: const BannerImage(),
+                    onTap: _onPickBannerImage,
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 140,
+                      child: _bannerImage == null
+                          ? Image.asset(
+                              appUser.bannerUrl,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              _bannerImage!,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                   ),
 
                   // Profile Image
@@ -119,11 +167,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       child: ClipOval(
                         child: ClickableOverlay(
-                          onTap: _showImageOptions,
-                          child: Image.asset(
-                            appUser.photoUrl,
-                            fit: BoxFit.cover,
-                          ),
+                          onTap: _onPickProfileImage,
+                          child: _profileImage == null
+                              ? Image.asset(
+                                  appUser.photoUrl,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.file(
+                                  _profileImage!,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                     ),
