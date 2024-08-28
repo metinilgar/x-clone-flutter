@@ -24,7 +24,21 @@ class _NavigationMenuState extends ConsumerState<NavigationMenu> {
     final selectedIndex = ref.watch(navigationControllerProvider);
 
     return Scaffold(
-      // AppBar
+      floatingActionButton: selectedIndex == 0
+          ? Hidable(
+              controller: scrollController,
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: FloatingActionButton(
+                  shape: const CircleBorder(),
+                  onPressed: () {},
+                  child: const Icon(Icons.add),
+                ),
+              ),
+            )
+          : null,
+
+      // AppBasr
       appBar: Hidable(
         preferredWidgetSize: const Size.fromHeight(100),
         controller: scrollController,
