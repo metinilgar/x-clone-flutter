@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/controller/navigation_controller.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/appbar/appbar_content.dart';
+import 'package:x_clone_flutter/src/features/navigation_menu/presentation/create_post.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/drawer/drawer_contents.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/navigationbar/navigationbar_content.dart';
 import 'package:x_clone_flutter/src/features/notifications/notifications_screen.dart';
@@ -19,6 +20,22 @@ class NavigationMenu extends ConsumerStatefulWidget {
 class _NavigationMenuState extends ConsumerState<NavigationMenu> {
   final ScrollController scrollController = ScrollController();
 
+  void _openCreatePost() {
+    showModalBottomSheet<void>(
+      constraints: const BoxConstraints(
+        minWidth: double.infinity,
+        minHeight: double.infinity,
+      ),
+      shape: const RoundedRectangleBorder(),
+      isScrollControlled: true,
+      enableDrag: false,
+      context: context,
+      builder: (BuildContext context) {
+        return const CreatePost();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final selectedIndex = ref.watch(navigationControllerProvider);
@@ -31,7 +48,7 @@ class _NavigationMenuState extends ConsumerState<NavigationMenu> {
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
                   shape: const CircleBorder(),
-                  onPressed: () {},
+                  onPressed: () => _openCreatePost(),
                   child: const Icon(Icons.add),
                 ),
               ),
