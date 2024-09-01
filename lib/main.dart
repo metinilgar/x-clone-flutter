@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/controller/dark_mode_controller.dart';
+import 'package:x_clone_flutter/src/utils/providers/shared_preferences_provider.dart';
 import 'package:x_clone_flutter/src/utils/theme/theme.dart';
 import 'package:x_clone_flutter/src/features/authentication/presentation/screens/splash_screen.dart';
 
-void main() {
-  runApp(const ProviderScope(child: MainApp()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final sharedPreferences = await SharedPreferences.getInstance();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends ConsumerWidget {

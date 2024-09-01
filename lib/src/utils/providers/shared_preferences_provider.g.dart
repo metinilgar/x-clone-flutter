@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dark_mode_controller.dart';
+part of 'shared_preferences_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$darkModeControllerHash() =>
-    r'227628cf3a154ad0e47a48d56567027928184821';
+String _$sharedPreferencesHash() => r'5bd64b2e955a2adbe9af0a4cd3edab6923105998';
 
-/// See also [DarkModeController].
-@ProviderFor(DarkModeController)
-final darkModeControllerProvider =
-    AutoDisposeNotifierProvider<DarkModeController, ThemeMode?>.internal(
-  DarkModeController.new,
-  name: r'darkModeControllerProvider',
+/// See also [sharedPreferences].
+@ProviderFor(sharedPreferences)
+final sharedPreferencesProvider =
+    AutoDisposeProvider<SharedPreferences>.internal(
+  sharedPreferences,
+  name: r'sharedPreferencesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$darkModeControllerHash,
+      : _$sharedPreferencesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DarkModeController = AutoDisposeNotifier<ThemeMode?>;
+typedef SharedPreferencesRef = AutoDisposeProviderRef<SharedPreferences>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

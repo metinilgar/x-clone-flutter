@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:x_clone_flutter/src/features/navigation_menu/presentation/drawer/dark_mode_menu.dart';
+import 'package:x_clone_flutter/src/features/navigation_menu/presentation/drawer/dark_mode_menu_button.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/drawer/drawer_profile_header.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/profile_screen.dart';
 
@@ -45,19 +45,7 @@ class DrawerContents extends StatelessWidget {
           ),
 
           // Change Theme
-          IconButton(
-            padding: const EdgeInsets.all(26),
-            onPressed: () {
-              Navigator.pop(context);
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const DarkModeMenu();
-                },
-              );
-            },
-            icon: const Icon(Icons.brightness_4_outlined),
-          ),
+          const DarkModeMenuButton(),
         ],
       ),
     );
