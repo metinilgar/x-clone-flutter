@@ -32,7 +32,6 @@ class TweetCard extends StatelessWidget {
                 TweetHeader(
                   displayName: data.displayName,
                   username: data.username,
-                  time: data.time,
                   date: data.date,
                 ),
                 const SizedBox(height: 12.0),

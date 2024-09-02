@@ -7,11 +7,9 @@ class TweetHeader extends StatelessWidget {
       {super.key,
       required this.displayName,
       required this.username,
-      required this.time,
       required this.date});
   final String displayName;
   final String username;
-  final String time;
   final String date;
 
   @override
@@ -30,7 +28,7 @@ class TweetHeader extends StatelessWidget {
         const SizedBox(width: 4.0),
 
         // Username
-        Flexible(
+        Expanded(
           child: Text(
             '@$username',
             overflow: TextOverflow.ellipsis,
@@ -42,13 +40,16 @@ class TweetHeader extends StatelessWidget {
 
         // Tweet metadata
         // TODO: Calculate time difference and show '1m', '2h', '1d' etc. with DateTime.now()
-        Text(
-          time,
-          style: const TextStyle(color: Color(0xFF566370)),
+        Expanded(
+          child: Text(
+            date,
+            overflow: TextOverflow.ellipsis,
+            softWrap: false,
+            style: const TextStyle(color: Color(0xFF566370)),
+          ),
         ),
 
         // More icon
-        const Spacer(),
         const Icon(
           Icons.more_vert,
           color: Color(0xFF566370),
