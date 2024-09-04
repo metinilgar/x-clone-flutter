@@ -28,7 +28,7 @@ class TweetRepository {
     }
   }
 
-  Future<TweetData> createPost(String userId, String content) async {
+  Future<void> createPost(String userId, String content) async {
     try {
       final response = await dio.post(
         "/tweets",
@@ -36,7 +36,7 @@ class TweetRepository {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return TweetData.fromMap(response.data);
+        return;
       }
       throw "something went wrong";
     } on DioException catch (e) {
@@ -48,18 +48,4 @@ class TweetRepository {
 @riverpod
 TweetRepository tweetRepository(TweetRepositoryRef ref) {
   return TweetRepository(ref.read(dioProvider));
-}
-
-@riverpod
-Future<List<TweetData>> getTweets(GetTweetsRef ref) {
-  return ref.read(tweetRepositoryProvider).getTweets();
-}
-
-@riverpod
-Future<TweetData> createPost(
-  CreatePostRef ref, {
-  required String userId,
-  required String content,
-}) {
-  return ref.read(tweetRepositoryProvider).createPost(userId, content);
 }

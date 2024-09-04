@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/controller/post_list_controller.dart';
+import 'package:x_clone_flutter/src/utils/providers/user_id_provider.dart';
 
 class CreatePost extends ConsumerStatefulWidget {
   const CreatePost({super.key});
@@ -28,6 +30,30 @@ class _CreatePostState extends ConsumerState<CreatePost> {
   Widget build(BuildContext context) {
     final topSpace = MediaQuery.of(context).size.height * 0.04;
     final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
+    final state = ref.watch(postListControllerProvider);
+
+    // TODO: Review error handling.
+    ref.listen<AsyncValue>(
+      postListControllerProvider,
+      (previous, state) {
+        if (state.isRefreshing == false && state.hasError) {
+          showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(state.error.toString()),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  ));
+        } else if (state.isRefreshing == false && state.hasValue) {
+          Navigator.of(context).pop();
+        }
+      },
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -43,13 +69,24 @@ class _CreatePostState extends ConsumerState<CreatePost> {
                 ),
                 const Spacer(),
                 ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: state.isLoading
+                        ? null
+                        : () {
+                            if (_textEditingController.text.isNotEmpty) {
+                              ref
+                                  .read(postListControllerProvider.notifier)
+                                  .createPost(ref.read(userIdProvider)!,
+                                      _textEditingController.text);
+                            }
+                          },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    child: const Text("Post")),
+                    child: state.isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text("Post")),
               ],
             ),
             Row(

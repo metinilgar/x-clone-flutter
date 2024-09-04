@@ -1,25 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tweet_repository.dart';
+part of 'post_list_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tweetRepositoryHash() => r'441ec4cde83a55cb26a9b89aadb1ae2756dfa378';
+String _$postListControllerHash() =>
+    r'af2152cab496712fcc1652c96627dc0ea25572b0';
 
-/// See also [tweetRepository].
-@ProviderFor(tweetRepository)
-final tweetRepositoryProvider = AutoDisposeProvider<TweetRepository>.internal(
-  tweetRepository,
-  name: r'tweetRepositoryProvider',
+/// See also [PostListController].
+@ProviderFor(PostListController)
+final postListControllerProvider = AutoDisposeAsyncNotifierProvider<
+    PostListController, List<TweetData>>.internal(
+  PostListController.new,
+  name: r'postListControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$tweetRepositoryHash,
+      : _$postListControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef TweetRepositoryRef = AutoDisposeProviderRef<TweetRepository>;
+typedef _$PostListController = AutoDisposeAsyncNotifier<List<TweetData>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
