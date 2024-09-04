@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_components/tweet_action.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_components/tweet_action.dart';
 import 'package:x_clone_flutter/src/utils/constants/svg_asset.dart';
 
 class TweetActions extends StatelessWidget {

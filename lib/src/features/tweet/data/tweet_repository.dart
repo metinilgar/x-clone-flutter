@@ -27,6 +27,22 @@ class TweetRepository {
       throw DioExceptionMessage.fromDioError(e).errorMessage;
     }
   }
+
+  Future<TweetData> createPost(String userId, String content) async {
+    try {
+      final response = await dio.post(
+        "/tweets",
+        data: {"user_id": userId, "content": content},
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return TweetData.fromMap(response.data);
+      }
+      throw "something went wrong";
+    } on DioException catch (e) {
+      throw DioExceptionMessage.fromDioError(e).errorMessage;
+    }
+  }
 }
 
 @riverpod
@@ -37,4 +53,13 @@ TweetRepository tweetRepository(TweetRepositoryRef ref) {
 @riverpod
 Future<List<TweetData>> getTweets(GetTweetsRef ref) {
   return ref.read(tweetRepositoryProvider).getTweets();
+}
+
+@riverpod
+Future<TweetData> createPost(
+  CreatePostRef ref, {
+  required String userId,
+  required String content,
+}) {
+  return ref.read(tweetRepositoryProvider).createPost(userId, content);
 }

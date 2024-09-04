@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/tweet/data/tweet_repository.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_card.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_card.dart';
 
 class TweetListScreen extends ConsumerWidget {
   const TweetListScreen({super.key, required this.scrollController});

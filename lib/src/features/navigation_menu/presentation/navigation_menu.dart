@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/controller/navigation_controller.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/appbar/appbar_content.dart';
-import 'package:x_clone_flutter/src/features/navigation_menu/presentation/create_post.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/screens/create_post.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/drawer/drawer_contents.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/presentation/navigationbar/navigationbar_content.dart';
 import 'package:x_clone_flutter/src/features/notifications/notifications_screen.dart';
 import 'package:x_clone_flutter/src/features/search/search_screen.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_list_screen.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/screens/tweet_list_screen.dart';
 import 'package:hidable/hidable.dart';
 
 class NavigationMenu extends ConsumerStatefulWidget {

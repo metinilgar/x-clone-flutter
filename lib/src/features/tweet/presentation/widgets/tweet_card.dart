@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:x_clone_flutter/src/features/tweet/models/tweet_data.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_components/tweet_actions.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_components/tweet_header.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_components/tweet_image.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_components/tweet_text.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_components/tweet_actions.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_components/tweet_header.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_components/tweet_image.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_components/tweet_text.dart';
 
 class TweetCard extends StatelessWidget {
   const TweetCard({super.key, required this.data});

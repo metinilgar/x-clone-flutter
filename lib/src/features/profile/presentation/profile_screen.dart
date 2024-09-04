@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/profile_app_bar/profile_app_bar.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/profile_app_bar/profile_information.dart';
-import 'package:x_clone_flutter/src/features/tweet/presentation/tweet_card.dart';
+import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
