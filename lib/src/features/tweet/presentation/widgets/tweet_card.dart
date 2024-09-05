@@ -46,7 +46,7 @@ class TweetCard extends StatelessWidget {
                 ],
 
                 // Tweet actions
-                TweetActions(likesCount: data.likesCount),
+                TweetActions(id: data.id),
                 const SizedBox(height: 8.0),
               ],
             ),

@@ -43,6 +43,36 @@ class TweetRepository {
       throw DioExceptionMessage.fromDioError(e).errorMessage;
     }
   }
+
+  Future<void> likePost(String tweetId, bool like) async {
+    try {
+      final response = await dio.put(
+        "/tweets/liked",
+        data: {"id": tweetId, "value": "${like ? 1 : -1}"},
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return;
+      }
+      throw "something went wrong";
+    } on DioException catch (e) {
+      throw DioExceptionMessage.fromDioError(e).errorMessage;
+    }
+  }
+
+  Future<TweetData> getTweet(String tweetId) async {
+    try {
+      final response = await dio.get("/tweets/$tweetId");
+
+      if (response.statusCode == 200) {
+        return TweetData.fromMap(response.data);
+      }
+
+      throw "something went wrong";
+    } on DioException catch (e) {
+      throw DioExceptionMessage.fromDioError(e).errorMessage;
+    }
+  }
 }
 
 @riverpod
