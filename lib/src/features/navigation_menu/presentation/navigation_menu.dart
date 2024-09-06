@@ -66,7 +66,7 @@ class _NavigationMenuState extends ConsumerState<NavigationMenu> {
       drawer: const DrawerContents(),
       bottomNavigationBar: Hidable(
         controller: scrollController,
-        child: const NavigationbarContent(),
+        child: NavigationbarContent(scrollController: scrollController),
       ),
 
       // Body

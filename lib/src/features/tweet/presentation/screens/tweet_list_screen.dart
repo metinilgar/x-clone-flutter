@@ -16,14 +16,18 @@ class TweetListScreen extends ConsumerWidget {
       body: tweets.when(
         data: (data) {
           return data.isNotEmpty
-              ? ListView.builder(
-                  controller: scrollController,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => Column(
-                    children: [
-                      TweetCard(data: data[index]),
-                      const Divider(),
-                    ],
+              ? RefreshIndicator(
+                  onRefresh: () =>
+                      ref.read(postListControllerProvider.notifier).refresh(),
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: data.length,
+                    itemBuilder: (context, index) => Column(
+                      children: [
+                        TweetCard(data: data[index]),
+                        const Divider(),
+                      ],
+                    ),
                   ),
                 )
               : const Center(child: Text('No tweets yet'));

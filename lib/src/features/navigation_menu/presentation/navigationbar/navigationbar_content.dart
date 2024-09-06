@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/controller/navigation_controller.dart';
 
 class NavigationbarContent extends ConsumerWidget {
-  const NavigationbarContent({super.key});
+  const NavigationbarContent({super.key, required this.scrollController});
+
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,9 +51,9 @@ class NavigationbarContent extends ConsumerWidget {
           selectedIndex: selectedIndex,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          onDestinationSelected: ref
+          onDestinationSelected: (index) => ref
               .read(navigationControllerProvider.notifier)
-              .onDestinationSelected,
+              .onDestinationSelected(index, scrollController),
           destinations: destinations),
     );
   }

@@ -14,8 +14,11 @@ class PostListController extends _$PostListController {
   Future<void> createPost(String userId, String content) async {
     await ref.read(tweetRepositoryProvider).createPost(userId, content);
 
-    ref.invalidateSelf();
+    refresh();
+  }
 
+  Future<void> refresh() async {
+    ref.invalidateSelf();
     await future;
   }
 }
