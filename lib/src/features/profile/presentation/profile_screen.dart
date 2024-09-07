@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/controller/profile_post_list_controlller.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/profile_app_bar/profile_app_bar.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/profile_app_bar/profile_information.dart';
 import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_card.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final List<String> tabs = <String>['Posts', 'Likes'];
+    final posts = ref.watch(profilePostListControlllerProvider);
 
     return DefaultTabController(
       length: tabs.length,
@@ -37,23 +39,31 @@ class ProfileScreen extends StatelessWidget {
           ],
 
           // TabBarView
-          body: TabBarView(
-            children: tabs.map((String name) {
+          body: TabBarView(children: [
+            posts.when(data: (data) {
               return ListView.builder(
-                padding: const EdgeInsets.only(top: 16.0),
-                key: PageStorageKey<String>(name),
-                itemCount: appUser.tweets.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      TweetCard(data: appUser.tweets[index]),
-                      const Divider(),
-                    ],
-                  );
-                },
+                padding: const EdgeInsets.only(top: 12),
+                itemCount: data.length,
+                itemBuilder: (context, index) => Column(
+                  children: [
+                    TweetCard(data: data[index]),
+                    const Divider(),
+                  ],
+                ),
               );
-            }).toList(),
-          ),
+            }, error: (error, _) {
+              return Center(
+                child: Text(error.toString()),
+              );
+            }, loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }),
+            const Center(
+              child: Text('Likes'),
+            ),
+          ]),
         ),
       )),
     );
