@@ -5,11 +5,13 @@ import 'package:x_clone_flutter/src/utils/constants/svg_asset.dart';
 class TweetAction extends StatelessWidget {
   const TweetAction({
     super.key,
-    required this.asset,
+    this.asset,
+    this.icon,
     required this.text,
     this.onTap,
   });
-  final SvgAsset asset;
+  final SvgAsset? asset;
+  final Icon? icon;
   final String text;
   final void Function()? onTap;
 
@@ -19,7 +21,9 @@ class TweetAction extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          VectorIcon(asset: asset, height: 20),
+          if (asset != null && icon == null)
+            VectorIcon(asset: asset!, height: 20),
+          if (asset == null && icon != null) icon!,
           const SizedBox(width: 8.0),
           Text(
             text,

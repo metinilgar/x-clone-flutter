@@ -34,7 +34,10 @@ class _TweetActionsState extends ConsumerState<TweetActions> {
     return Row(
       children: [
         TweetAction(
-          asset: SvgAsset.heartRed,
+          icon: likeStatus
+              ? const Icon(Icons.favorite_border,
+                  size: 22, color: Color(0xFF566370))
+              : const Icon(Icons.favorite, size: 22, color: Color(0xFFE5387F)),
           text: like.when(
             data: (data) => data.toString(),
             loading: () => '...',
