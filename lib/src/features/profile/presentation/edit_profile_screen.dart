@@ -1,30 +1,25 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/controller/user_profile_information_controller.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/clickable_overlay.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/entry.dart';
 
-class EditProfileScreen extends StatefulWidget {
+class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  late TextEditingController _nameTextFieldController;
-  late TextEditingController _bioTextFieldController;
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+  final _nameTextFieldController = TextEditingController();
+  final _bioTextFieldController = TextEditingController();
   File? _bannerImage;
   File? _profileImage;
-
-  @override
-  void initState() {
-    _nameTextFieldController = TextEditingController(text: appUser.name);
-    _bioTextFieldController = TextEditingController(text: appUser.bio);
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -115,7 +110,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: const Text('Edit Profile'),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              if (_nameTextFieldController.text.isNotEmpty) {
+                await ref
+                    .read(userProfileInformationControllerProvider.notifier)
+                    .updateProfile(_nameTextFieldController.text,
+                        _bioTextFieldController.text);
+
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Name cannot be empty"),
+                  ),
+                );
+              }
+            },
             child: const Text("Save"),
           ),
         ],
@@ -185,17 +197,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
 
               // Name TextField
-              Entry(
-                  controller: _nameTextFieldController,
-                  title: "Name",
-                  maxLine: 1),
-              const SizedBox(height: 26),
+              ref.read(userProfileInformationControllerProvider).when(
+                    data: (user) {
+                      return Column(
+                        children: [
+                          Entry(
+                              controller: _nameTextFieldController
+                                ..text = user.fullname,
+                              title: "Name",
+                              maxLine: 1),
+                          const SizedBox(height: 26),
 
-              // Bio TextField
-              Entry(
-                  controller: _bioTextFieldController,
-                  title: "Personal Information",
-                  maxLine: 3),
+                          // Bio TextField
+                          Entry(
+                              controller: _bioTextFieldController
+                                ..text = user.description,
+                              title: "Personal Information",
+                              maxLine: 3),
+                        ],
+                      );
+                    },
+                    loading: () => const CircularProgressIndicator(),
+                    error: (error, _) => Center(child: Text("Error: $error")),
+                  ),
             ],
           ),
         ),

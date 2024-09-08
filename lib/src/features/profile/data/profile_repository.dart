@@ -46,6 +46,28 @@ class ProfileRepository {
       throw DioExceptionMessage.fromDioError(e).errorMessage;
     }
   }
+
+  Future<void> updateProfile(
+      String userId, String fullname, String description) async {
+    try {
+      final response = await dio.put(
+        "/users",
+        data: {
+          "id": userId,
+          "fullname": fullname,
+          "description": description,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return;
+      }
+
+      throw "something went wrong";
+    } on DioException catch (e) {
+      throw DioExceptionMessage.fromDioError(e).errorMessage;
+    }
+  }
 }
 
 @riverpod
