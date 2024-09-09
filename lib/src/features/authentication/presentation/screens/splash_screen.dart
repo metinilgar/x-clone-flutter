@@ -23,9 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void isLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    // TODO: The user is assumed to be logged in. Will be changed when authentication is added.
-    bool? isLogin = preferences.getBool('isLoggedIn') ?? true;
-    preferences.setString("userId", "78670e55-330f-4af1-88b7-530850b905dc");
+    bool isLogin = preferences.getBool('isLoggedIn') ?? false;
 
     if (isLogin) {
       Timer(const Duration(seconds: 1), () {
