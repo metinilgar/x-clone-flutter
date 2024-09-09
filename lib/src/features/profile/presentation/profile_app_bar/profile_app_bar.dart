@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/banner_image.dart';
+import 'package:x_clone_flutter/src/features/profile/presentation/controller/user_profile_information_controller.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile_screen.dart';
 
-class ProfileAppBar extends StatelessWidget {
+class ProfileAppBar extends ConsumerWidget {
   const ProfileAppBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SliverAppBar(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -32,7 +34,14 @@ class ProfileAppBar extends StatelessWidget {
         bool isAppBarExpanded = constraints.maxHeight > kToolbarHeight;
 
         return FlexibleSpaceBar(
-          title: isAppBarExpanded ? null : Text(appUser.name),
+          title: isAppBarExpanded
+              ? null
+              : Text(
+                  ref.watch(userProfileInformationControllerProvider).when(
+                      data: (data) => data.fullname,
+                      error: (error, _) => "",
+                      loading: () => ""),
+                ),
           background: Stack(
             alignment: Alignment.topCenter,
             children: [

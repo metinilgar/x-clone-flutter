@@ -85,7 +85,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         getImage(ImageSource.gallery, onPickImage);
         break;
       case null:
-        print("dialog dismissed");
+        // dialog dismissed ;
         break;
     }
   }
