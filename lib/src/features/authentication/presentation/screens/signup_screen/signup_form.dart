@@ -152,10 +152,11 @@ class SignupForm extends ConsumerWidget {
                       content: Text("Account created successfully"),
                     ),
                   );
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => const LoginScreen(),
                     ),
+                    (route) => false,
                   );
                 }
               }

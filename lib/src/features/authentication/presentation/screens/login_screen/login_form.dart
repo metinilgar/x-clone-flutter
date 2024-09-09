@@ -72,10 +72,11 @@ class LoginForm extends ConsumerWidget {
                           .loginUser(email, password);
 
                       if (loginStatus && context.mounted) {
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (context) => const NavigationMenu(),
                           ),
+                          (route) => false,
                         );
                       }
                     }
