@@ -32,7 +32,6 @@ class _CreatePostState extends ConsumerState<CreatePost> {
     final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
     final state = ref.watch(postListControllerProvider);
 
-    // TODO: Review error handling.
     ref.listen<AsyncValue>(
       postListControllerProvider,
       (previous, state) {

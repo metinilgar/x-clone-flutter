@@ -11,10 +11,14 @@ class PostLikeController extends _$PostLikeController {
     return tweetData.likesCount;
   }
 
-  // TODO: Handle error
   void likePost(String tweetId, bool like) async {
-    await ref.read(tweetRepositoryProvider).likePost(tweetId, like);
-    final newTweets = await ref.read(tweetRepositoryProvider).getTweet(tweetId);
-    state = AsyncData(newTweets.likesCount);
+    try {
+      await ref.read(tweetRepositoryProvider).likePost(tweetId, like);
+      final newTweets =
+          await ref.read(tweetRepositoryProvider).getTweet(tweetId);
+      state = AsyncData(newTweets.likesCount);
+    } catch (e) {
+      state = AsyncError(e, StackTrace.current);
+    }
   }
 }
