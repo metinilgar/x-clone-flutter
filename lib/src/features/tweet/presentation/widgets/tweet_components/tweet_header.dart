@@ -39,7 +39,6 @@ class TweetHeader extends StatelessWidget {
         const SizedBox(width: 4.0),
 
         // Tweet metadata
-        // TODO: Calculate time difference and show '1m', '2h', '1d' etc. with DateTime.now()
         Expanded(
           child: Text(
             date,
