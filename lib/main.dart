@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:x_clone_flutter/src/features/authentication/presentation/controllers/login_controller.dart';
+import 'package:x_clone_flutter/src/features/authentication/presentation/screens/auth_screen.dart';
 import 'package:x_clone_flutter/src/features/navigation_menu/controller/dark_mode_controller.dart';
+import 'package:x_clone_flutter/src/features/navigation_menu/presentation/navigation_menu.dart';
 import 'package:x_clone_flutter/src/utils/providers/shared_preferences_provider.dart';
 import 'package:x_clone_flutter/src/utils/theme/theme.dart';
 import 'package:x_clone_flutter/src/features/authentication/presentation/screens/splash_screen.dart';
@@ -34,7 +37,17 @@ class MainApp extends ConsumerWidget {
 
       // Dark theme
       darkTheme: XAppTheme.kDarkTheme,
-      home: const SplashScreen(),
+      home: ref.watch(loginControllerProvider).when(
+            data: (isLoggedIn) {
+              if (isLoggedIn) {
+                return const NavigationMenu();
+              } else {
+                return const AuthScreen();
+              }
+            },
+            loading: () => const SplashScreen(),
+            error: (error, _) => const AuthScreen(),
+          ),
     );
   }
 }

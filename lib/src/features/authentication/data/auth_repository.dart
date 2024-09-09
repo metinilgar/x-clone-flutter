@@ -33,6 +33,26 @@ class AuthRepository {
       throw DioExceptionMessage.fromDioError(e).errorMessage;
     }
   }
+
+  Future<Map<String, dynamic>> login(String email, String password) async {
+    try {
+      final response = await dio.post(
+        "/auth/login",
+        data: {
+          "email": email,
+          "password": password,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+
+      throw "something went wrong";
+    } on DioException catch (e) {
+      throw DioExceptionMessage.fromDioError(e).errorMessage;
+    }
+  }
 }
 
 @riverpod
