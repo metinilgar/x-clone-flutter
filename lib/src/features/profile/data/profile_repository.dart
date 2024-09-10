@@ -68,6 +68,22 @@ class ProfileRepository {
       throw DioExceptionMessage.fromDioError(e).errorMessage;
     }
   }
+
+  Future<void> followUser(String userId, String followerId, String path) async {
+    try {
+      final response = await dio.put(
+        "/users/$userId/$path/$followerId",
+      );
+
+      if (response.statusCode == 200) {
+        return;
+      }
+
+      throw "something went wrong";
+    } on DioException catch (e) {
+      throw DioExceptionMessage.fromDioError(e).errorMessage;
+    }
+  }
 }
 
 @riverpod

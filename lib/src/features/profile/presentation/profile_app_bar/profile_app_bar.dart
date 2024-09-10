@@ -6,14 +6,33 @@ import 'package:x_clone_flutter/src/features/profile/presentation/controller/use
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile_screen.dart';
 import 'package:x_clone_flutter/src/utils/providers/user_id_provider.dart';
 
-class ProfileAppBar extends ConsumerWidget {
+class ProfileAppBar extends ConsumerStatefulWidget {
   const ProfileAppBar(this.userId, {super.key});
 
   final String userId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userStatus = ref.read(userIdProvider)! == userId;
+  ConsumerState<ProfileAppBar> createState() => _ProfileAppBarState();
+}
+
+class _ProfileAppBarState extends ConsumerState<ProfileAppBar> {
+  bool followStatus = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final userStatus = ref.read(userIdProvider)! == widget.userId;
+
+    ref.listen<AsyncValue>(
+        userProfileInformationControllerProvider(widget.userId),
+        (previous, next) {
+      if (next.isRefreshing == false && next.hasError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.error.toString()),
+          ),
+        );
+      }
+    });
 
     return SliverAppBar(
       surfaceTintColor: Colors.transparent,
@@ -43,7 +62,8 @@ class ProfileAppBar extends ConsumerWidget {
               ? null
               : Text(
                   ref
-                      .watch(UserProfileInformationControllerProvider(userId))
+                      .watch(UserProfileInformationControllerProvider(
+                          widget.userId))
                       .when(
                           data: (data) => data.fullname,
                           error: (error, _) => "",
@@ -87,13 +107,23 @@ class ProfileAppBar extends ConsumerWidget {
                   onPressed: userStatus
                       ? () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => EditProfileScreen(userId),
+                              builder: (context) =>
+                                  EditProfileScreen(widget.userId),
                             ),
                           )
-                      : () {},
+                      : () {
+                          ref
+                              .read(userProfileInformationControllerProvider(
+                                      widget.userId)
+                                  .notifier)
+                              .followUser(widget.userId, followStatus);
+                          followStatus = !followStatus;
+                        },
                   child: userStatus
                       ? const Text('Edit Profile')
-                      : const Text('Follow'),
+                      : followStatus
+                          ? const Text('Unfollow')
+                          : const Text('Follow'),
                 ),
               ),
             ],
