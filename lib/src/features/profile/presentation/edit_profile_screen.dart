@@ -9,7 +9,9 @@ import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/c
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile/entry.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
-  const EditProfileScreen({super.key});
+  const EditProfileScreen(this.userId, {super.key});
+
+  final String userId;
 
   @override
   ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -113,9 +115,13 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             onPressed: () async {
               if (_nameTextFieldController.text.isNotEmpty) {
                 await ref
-                    .read(userProfileInformationControllerProvider.notifier)
-                    .updateProfile(_nameTextFieldController.text,
-                        _bioTextFieldController.text);
+                    .read(
+                        UserProfileInformationControllerProvider(widget.userId)
+                            .notifier)
+                    .updateProfile(
+                        fullname: _nameTextFieldController.text,
+                        description: _bioTextFieldController.text,
+                        userId: widget.userId);
 
                 if (context.mounted) {
                   Navigator.pop(context);
@@ -197,7 +203,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               ),
 
               // Name TextField
-              ref.read(userProfileInformationControllerProvider).when(
+              ref
+                  .read(userProfileInformationControllerProvider(widget.userId))
+                  .when(
                     data: (user) {
                       return Column(
                         children: [

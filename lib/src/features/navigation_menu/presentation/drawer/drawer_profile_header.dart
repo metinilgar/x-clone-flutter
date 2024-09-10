@@ -3,13 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/authentication/presentation/controllers/login_controller.dart';
 import 'package:x_clone_flutter/src/features/authentication/presentation/screens/auth_screen.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/controller/user_profile_information_controller.dart';
+import 'package:x_clone_flutter/src/utils/providers/user_id_provider.dart';
 
 class DrawerProfileHeader extends ConsumerWidget {
   const DrawerProfileHeader({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appUser = ref.watch(userProfileInformationControllerProvider);
+    final appUser = ref.watch(
+        UserProfileInformationControllerProvider(ref.read(userIdProvider)!));
 
     return DrawerHeader(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),

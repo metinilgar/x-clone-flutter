@@ -4,12 +4,17 @@ import 'package:x_clone_flutter/src/features/authentication/data/fake_user_data.
 import 'package:x_clone_flutter/src/features/profile/presentation/banner_image.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/controller/user_profile_information_controller.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/edit_profile_screen.dart';
+import 'package:x_clone_flutter/src/utils/providers/user_id_provider.dart';
 
 class ProfileAppBar extends ConsumerWidget {
-  const ProfileAppBar({super.key});
+  const ProfileAppBar(this.userId, {super.key});
+
+  final String userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userStatus = ref.read(userIdProvider)! == userId;
+
     return SliverAppBar(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -37,10 +42,12 @@ class ProfileAppBar extends ConsumerWidget {
           title: isAppBarExpanded
               ? null
               : Text(
-                  ref.watch(userProfileInformationControllerProvider).when(
-                      data: (data) => data.fullname,
-                      error: (error, _) => "",
-                      loading: () => ""),
+                  ref
+                      .watch(UserProfileInformationControllerProvider(userId))
+                      .when(
+                          data: (data) => data.fullname,
+                          error: (error, _) => "",
+                          loading: () => ""),
                 ),
           background: Stack(
             alignment: Alignment.topCenter,
@@ -77,12 +84,16 @@ class ProfileAppBar extends ConsumerWidget {
                 right: 8,
                 bottom: 0,
                 child: OutlinedButton(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const EditProfileScreen(),
-                    ),
-                  ),
-                  child: const Text('Edit Profile'),
+                  onPressed: userStatus
+                      ? () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(userId),
+                            ),
+                          )
+                      : () {},
+                  child: userStatus
+                      ? const Text('Edit Profile')
+                      : const Text('Follow'),
                 ),
               ),
             ],

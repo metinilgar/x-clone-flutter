@@ -2,7 +2,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:x_clone_flutter/src/features/profile/data/profile_repository.dart';
 import 'package:x_clone_flutter/src/features/profile/models/user_profile.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/controller/profile_post_list_controlller.dart';
-import 'package:x_clone_flutter/src/utils/providers/user_id_provider.dart';
 
 part 'user_profile_information_controller.g.dart';
 
@@ -10,16 +9,17 @@ part 'user_profile_information_controller.g.dart';
 class UserProfileInformationController
     extends _$UserProfileInformationController {
   @override
-  FutureOr<UserProfile> build() {
-    return ref
-        .read(profileRepositoryProvider)
-        .getUserProfile(ref.read(userIdProvider)!);
+  FutureOr<UserProfile> build(String userId) {
+    return ref.read(profileRepositoryProvider).getUserProfile(userId);
   }
 
-  Future<void> updateProfile(String fullname, String description) async {
+  Future<void> updateProfile(
+      {required String fullname,
+      required String description,
+      required String userId}) async {
     await ref
         .read(profileRepositoryProvider)
-        .updateProfile(ref.read(userIdProvider)!, fullname, description);
+        .updateProfile(userId, fullname, description);
 
     refresh();
   }

@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_clone_flutter/src/features/profile/presentation/controller/user_profile_information_controller.dart';
 
 class ProfileInformation extends ConsumerWidget {
-  const ProfileInformation({super.key});
+  const ProfileInformation(this.userId, {super.key});
+
+  final String userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appUser = ref.watch(userProfileInformationControllerProvider);
+    final appUser = ref.watch(UserProfileInformationControllerProvider(userId));
 
     return SliverToBoxAdapter(
       child: Padding(

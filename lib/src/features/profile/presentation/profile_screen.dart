@@ -6,12 +6,14 @@ import 'package:x_clone_flutter/src/features/profile/presentation/profile_app_ba
 import 'package:x_clone_flutter/src/features/tweet/presentation/widgets/tweet_card.dart';
 
 class ProfileScreen extends ConsumerWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen(this.userId, {super.key});
+
+  final String userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<String> tabs = <String>['Posts', 'Likes'];
-    final posts = ref.watch(profilePostListControlllerProvider);
+    final posts = ref.watch(profilePostListControlllerProvider(userId));
 
     return DefaultTabController(
       length: tabs.length,
@@ -20,8 +22,8 @@ class ProfileScreen extends ConsumerWidget {
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => <Widget>[
             // ProfileAppBar
-            const ProfileAppBar(),
-            const ProfileInformation(),
+            ProfileAppBar(userId),
+            ProfileInformation(userId),
 
             // TabBar
             SliverPersistentHeader(
